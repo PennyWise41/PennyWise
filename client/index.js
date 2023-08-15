@@ -1,10 +1,10 @@
 import React from 'react';
-import { createRoot } from 'react-dom/client';
+import { createRoot } from 'react-dom';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import App from './App.jsx';
 import store from './store';
-import ReactDOM from 'react-dom/client';
+import ReactDOM from 'react-dom';
 
 // const root = createRoot(document.getElementById('root'));
 // root.render(
