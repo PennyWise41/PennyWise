@@ -43,10 +43,8 @@ clientController.createClient = async (req, res, next) => {
 			console.log('got id:', newID);
 			console.log(req.body);
       const sqlQuery = 'INSERT INTO Client (id, username, password, fname, lname) VALUES ($1, $2, $3, $4, $5)';
-      // const sqlQuery = 'INSERT INTO Client (id, username, password, fname, lname) VALUES ($1, $2, $3, $4, $5) RETURNING _id';
-    
-      // const data = await db.query(sqlQuery, [newID, username, hashPassword, firstName, lastName]);
       await db.query(sqlQuery, [newID, username, hashPassword, firstName, lastName]);
+			
 			const data = await db.query(`SELECT * FROM Client WHERE id = ${newID}`);
 			console.log(data);
       res.locals.id = data.rows[0].id;
