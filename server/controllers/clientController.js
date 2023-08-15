@@ -42,11 +42,14 @@ clientController.createClient = async (req, res, next) => {
 			const newID = id.rows[0].nextid;
 			console.log('got id:', newID);
 			console.log(req.body);
-      const sqlQuery = 'INSERT INTO Client (id, username, password, fname, lname) VALUES ($1, $2, $3, $4, $5) RETURNING id';
+      const sqlQuery = 'INSERT INTO Client (id, username, password, fname, lname) VALUES ($1, $2, $3, $4, $5)';
+      // const sqlQuery = 'INSERT INTO Client (id, username, password, fname, lname) VALUES ($1, $2, $3, $4, $5) RETURNING _id';
     
-      const data = await db.query(sqlQuery, [newID, username, hashPassword, firstName, lastName]);
+      // const data = await db.query(sqlQuery, [newID, username, hashPassword, firstName, lastName]);
+      await db.query(sqlQuery, [newID, username, hashPassword, firstName, lastName]);
+			const data = await db.query(`SELECT * FROM Client WHERE id = ${newID}`);
 			console.log(data);
-      res.locals._id = data.rows[0].id;
+      res.locals.id = data.rows[0].id;
       res.locals.firstName = data.rows[0].fname;
       res.locals.lastname = data.rows[0].lname;
       res.locals.username = data.rows[0].username;
@@ -64,59 +67,60 @@ clientController.createClient = async (req, res, next) => {
 
 
   
-  // /**
-  // * verifyUser - Obtain username and password from the request body, locate
-  // * the appropriate user in the database, and then authenticate the submitted password
-  // * against the password stored in the database.
-  // */
-  // clientController.verifyUser = (req, res, next) => {
-  //   // write code here
-  //   const { username, password } = req.body;
-  //   if (!username || !password) {
-  //     res.locals.signedIn = false;
-  //     return next();
-  //     // return next({
-  //     //   log: 'Missing username or password in userController.verifyUser',
-  //     //   status: 400,
-  //     //   message: { err: 'An error occurred in userController.verifyUser'}
-  //     // });
-  //   }
-  
-  //   User.findOne({ username }, (err, user) => {
-  //     if (err) {
-  //       res.locals.signedIn = false;
-  //       return next();
-  //       // return next({
-  //       //   log: 'Error occurred in userController.verifyUser',
-  //       //   status: 500,
-  //       //   message: { err: 'An error occurred in userController.verifyUser'}
-  //       // });
-  //     } else {
-  //       bcrypt.compare(password, user.password)
-  //         .then((result) => {
-  //           if (!result) {
-  //             res.locals.signedIn = false;
-  //             return next();
-  //             // return res.redirect('signup');
-  //           } else {
-  //             res.locals.signedIn = true;
-  //             res.locals.userDetail = user;
-  //             res.locals.userId = user.id;
-  //             return next();
-  //           }
-  //         })
-  //         .catch((err) => {
-  //           res.locals.signedIn = false;
-  //           return next();
-  //           // return next({
-  //           //   log: 'Error occurred in userController.verifyUser',
-  //           //   status: 500,
-  //           //   message: { err: 'An error occurred in userController.verifyUser'}
-  //           // });
-  //         });
-  //     }
-  //   });
-  // };
+/**
+* verifyUser - Obtain username and password from the request body, locate
+* the appropriate user in the database, and then authenticate the submitted password
+* against the password stored in the database.
+*/
+clientController.verifyClient = async (req, res, next) => {
+	const { username, password } = req.body;
+	if (!username || !password) {
+		res.locals.loggedIn = false;
+		return next();
+	}
+	console.log(req.body);
+
+	const sqlQuery = 'SELECT * FROM Client WHERE username = $1';
+
+	try {
+		const data = await db.query(sqlQuery, [username]);
+		// const data = await db.query(`SELECT * FROM Client WHERE username = ${username}`);
+		console.log(req.body);
+		console.log(data);
+		if (!data) {
+			res.locals.loggedIn = false;
+			return next();
+		} else {
+			bcrypt.compare(password, data.rows[0].password)
+				.then((result) => {
+					if (!result) {
+						res.locals.loggedIn = false;
+						return next();
+					} else {
+						res.locals.id = data.rows[0].id;
+						res.locals.firstName = data.rows[0].fname;
+						res.locals.lastname = data.rows[0].lname;
+						res.locals.username = data.rows[0].username;
+						res.locals.loggedIn = true;
+						return next();
+					}
+				})
+				.catch((err) => {
+					res.locals.loggedIn = false;
+					return next();
+				});
+		}
+
+	} catch (err) {
+		res.locals.loggedIn = false;
+		return next();
+		// return next({
+		// 	log: 'Error occurred in clientController.verifyClient',
+		// 	status: 500,
+		// 	message: { err: 'An error occurred in clientController.verifyClient'}
+		// });
+	}
+};
 
 
 

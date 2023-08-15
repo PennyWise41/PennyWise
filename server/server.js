@@ -30,7 +30,7 @@ app.get('/id', clientController.test, (req, res) => {
 
 // set up routers
 app.use('/client', clientRouter);
-// app.use('/data', dataRouter);
+app.use('/data', dataRouter);
 
 /**
  * 404 handler
