@@ -6,7 +6,7 @@ const path = require('path');
 const PORT = 3000;
 const app = express();
 
-const clientController = require('./controllers/clientController.js')
+const clientController = require('./controllers/clientController.js');
 
 // app.use(express.json());
 // app.use(express.urlencoded());
@@ -14,14 +14,18 @@ const clientController = require('./controllers/clientController.js')
 
 // app.use('/assets', express.static(path.resolve(__dirname, '../client/assets')));
 
-
 app.get('/', (req, res) => {
-  return res.json({message: 'we are good'})
-})
+  return res.json({ message: 'we are good' });
+});
+
+app.post('/signup', (req, res, next) => {
+  const { username, password, lastName, firstName } = req.body;
+  return res.json({ newUser: { username, password, lastName, firstName } });
+});
 
 app.get('/clients', clientController.getClients, () => {
-  return res.json({message: 'goooooood'})
-})
+  return res.json({ message: 'goooooood' });
+});
 
 /**
  * 404 handler
@@ -35,10 +39,10 @@ app.get('/clients', clientController.getClients, () => {
  */
 app.use((err, req, res, next) => {
   const defaultErr = {
-    log : 'Express error handler caught unknown middleware error',
-    status : 400,
-    message : {err: 'An error occurred'}
-  }
+    log: 'Express error handler caught unknown middleware error',
+    status: 400,
+    message: { err: 'An error occurred' },
+  };
 
   const errObj = Object.assign({}, defaultErr, err);
   console.log(errObj.log);
@@ -46,8 +50,7 @@ app.use((err, req, res, next) => {
   return res.status(errObj.status).json(errObj.message);
 });
 
-app.listen(PORT, ()=> {
-    console.log(`Listening on port ${PORT}...`); 
+app.listen(PORT, () => {
+  console.log(`Listening on port ${PORT}...`);
 });
 module.exports = app;
-
