@@ -12,13 +12,11 @@
     "author": "",
     "license": "ISC",
     "jest": {
-        "globalSetup": "./jest-setup.js",
-        "globalTeardown": "./jest-teardown.js",
         "testEnvironment": "jest-environment-jsdom",
-        "setupFilesAfterEnv": [
-            "@testing-library/jest-dom/extend-expect"
-        ]
-    },
+        "moduleNameMapper": {
+          "\\.(css|less|scss|sass)$": "identity-obj-proxy" 
+        }
+      },
     "dependencies": {
         "@redux-devtools/extension": "^3.2.5",
         "@testing-library/jest-dom": "^5.15.0",
