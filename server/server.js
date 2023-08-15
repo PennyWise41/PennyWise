@@ -8,25 +8,11 @@ const clientController = require('./controllers/clientController');
 const PORT = 3000;
 const app = express();
 
-// const clientController = require('./controllers/clientController.js')
-
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(cookieParser());
 
-// app.use('/assets', express.static(path.resolve(__dirname, '../client/assets')));
-
-
-// app.get('/', (req, res) => {
-//   return res.json({message: 'we are good'})
-// })
-
-// app.get('/clients', clientController.getClients, () => {
-//   return res.json({message: 'goooooood'})
-// })
-app.get('/id', clientController.test, (req, res) => {
-  return res.json(res.locals.id);
-})
+app.use('/assets', express.static(path.resolve(__dirname, '../client/assets')));
 
 // set up routers
 app.use('/client', clientRouter);

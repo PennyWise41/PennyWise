@@ -23,14 +23,5 @@ dataRouter.post(
 );
 
 
-
-
-
-
-
-
-
-
-
 // export clientRouter
 module.exports = dataRouter;

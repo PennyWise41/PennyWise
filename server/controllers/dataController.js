@@ -11,7 +11,7 @@ const dataController = {};
 // set budget for client in db budget table
 dataController.setBudget = async (req, res, next) => {
   const { id, year, month, total } = req.body;
-  console.log(req.body);
+  // console.log(req.body);
 
   try {
     // get next id# for new data row entry
@@ -24,7 +24,7 @@ dataController.setBudget = async (req, res, next) => {
 
     // query added budget row
     const data = await db.query(`SELECT * FROM Budget WHERE id = ${newID}`);
-    console.log(data);
+    // console.log(data);
     res.locals.total = data.rows[0].total;
     res.locals.remaining = data.rows[0].remaining;
     return next();
@@ -39,17 +39,19 @@ dataController.setBudget = async (req, res, next) => {
 
 dataController.addExpense = async (req, res, next) => {
   const { id, year, month, category, total, tax } = req.body;
-  console.log(req.body);
+  // console.log(req.body);
 
   try {
     // get current expense total for given category and month/year for this client
     const sqlQuery = 'SELECT * FROM Expenses WHERE clientid = $1 and year = $2 and month = $3 and category = $4';
 		const data = await db.query(sqlQuery, [id, year, month, category]);
-    console.log(data);
+    // console.log(data);
     const oldTotal = data.rows[0].total;
+
     // add new expense to total
     const newTotal = Number(oldTotal.replace(/[^0-9.-]+/g,"")) + total;
-    console.log(oldTotal, newTotal);
+    // console.log(oldTotal, newTotal);
+
     // update to expense total to db
     const sqlQueryUpdate = 'UPDATE Expenses SET total = $5 WHERE clientid = $1 and year = $2 and month = $3 and category = $4';
     const updated = await db.query(sqlQueryUpdate, [id, year, month, category, newTotal]);
@@ -57,7 +59,6 @@ dataController.addExpense = async (req, res, next) => {
     // query all expenses for the month/year for this client
     const sqlQueryExpenses = 'SELECT * FROM Expenses WHERE clientid = $1 and year = $2 and month = $3';
 		const expenses = await db.query(sqlQueryExpenses, [id, year, month]);
-    console.log(expenses);
     res.locals.expenses = expenses.rows;
     return next();
   } catch (err) {
@@ -72,7 +73,6 @@ dataController.addExpense = async (req, res, next) => {
     // query all expenses for the month/year for this client
     const sqlQueryExpenses = 'SELECT * FROM Expenses WHERE clientid = $1 and year = $2 and month = $3';
 		const expenses = await db.query(sqlQueryExpenses, [id, year, month]);
-    console.log(expenses);
     res.locals.expenses = expenses.rows;
     return next();
   }
@@ -82,7 +82,7 @@ dataController.addExpense = async (req, res, next) => {
 // update budget remaining balance in db with new expense
 dataController.updateBudget = async (req, res, next) => {
   const { id, year, month, total } = req.body;
-  console.log(req.body);
+  // console.log(req.body);
 
   try {
     // query curr client's budget with the given month/year
