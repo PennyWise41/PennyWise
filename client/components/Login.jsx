@@ -39,14 +39,16 @@ const Login = () => {
             className='login-input'
             type='password'
             placeholder='Password'
-            value={{ password }}
+            value={password}
             onChange={handlePasswordChange}
           />
-          <button type='submit' className='login-button'></button>
+          <button type='submit' className='login-button'>
+            Login
+          </button>
         </form>
       </div>
       <div>
-        <button className='signUp'></button>
+        <button className='signUp'>Sign Up</button>
       </div>
     </div>
   );
