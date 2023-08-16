@@ -12,11 +12,13 @@ const clientSlice = createSlice({
   name: 'clientSlice',
   initialState,
   reducers: {
-    login(state, action) {
-      state.isLoggedIn = action.payload;
+    updateBudget: (state, action) => {
+      console.log('updateBudget action received:', action);
+      state.budgetLeft += action.payload;
     },
   },
 });
 
-export const clientActions = clientSlice.actions;
+// export const clientActions = clientSlice.actions;.=
+export const { updateBudget } = clientSlice.actions;
 export default clientSlice.reducer;

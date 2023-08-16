@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { authActions } from '../redux/AuthReducer.js';
+import { login } from '../redux/AuthReducer.js';
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -16,12 +16,13 @@ const Login = () => {
     setPassword(event.target.value);
   };
 
-  function onSubmit() {
+  const onSubmit = (event) => {
+    event.preventDefault()
     // send username, password to db, verify somewhere - FETCH POST (TO DB)
     // of verified, client comes back.
     // dispatch ({type: 'loggedIn, client: client, isloggedIn: true})
 
-    return dispatch(authActions.login());
+    return dispatch(login(username));
   }
 
   return (

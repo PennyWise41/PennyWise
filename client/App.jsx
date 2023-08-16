@@ -12,14 +12,14 @@ const App = () => {
     <div>
       <div id='header'>
         <h1 id='title'>
-          <Link to='/'>PennyWise</Link>
+  { /*<Link to='/'>PennyWise</Link> */}
         </h1>
       </div>
       <Routes>
         {/* <Route exact path='/' element={<Home />} /> */}
         <Route path='/signup' element={<Signup />} />
         <Route path='/' element={<Login />} />
-        {/* <Route path='/dashboard' element={<Dashboard />} /> */}
+        <Route path='/dashboard' element={<Dashboard />} /> 
         {/* <Route path='/chart' element={<Chart />} /> */}
       </Routes>
     </div>

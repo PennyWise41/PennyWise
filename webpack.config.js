@@ -50,15 +50,13 @@ module.exports = {
     hot: true,
     compress: true,
     proxy: {
-      '/': 'http://localhost:3000',
+      '/api/**': {
+        target: 'http://localhost:3000/',
+        secure: false,
+      },
     },
   },
 };
-
-
-
-
-
 
 // // require the path
 // const path = require('path');
@@ -78,7 +76,7 @@ module.exports = {
 //       {
 //         test: /\.jsx?/,
 //         exclude: /node_modules/,
-        
+
 //         use: {
 //           loader: 'babel-loader',
 //           options: {
@@ -98,7 +96,7 @@ module.exports = {
 //           },
 //         ],
 //       },
-      
+
 //       {
 //         test: /\.s?css/,
 //         use: [
@@ -109,12 +107,12 @@ module.exports = {
 //       },
 //     ],
 //   },
-  
+
 //   plugins: [
 //     new HtmlWebpackPlugin({
 //       template: './client/index.html',
 //       filename: 'index.html',
-      
+
 //     }),
 //     // new Dotenv(),
 //   ],
@@ -124,18 +122,9 @@ module.exports = {
 //       directory: path.resolve(__dirname, 'build'),
 //     },
 //     proxy: { '/api': 'http://localhost:3000' },
-    
+
 //   },
 // };
-
-
-
-
-
-
-
-
-
 
 // const path = require('path');
 // const HtmlWebpackPlugin = require('html-webpack-plugin');

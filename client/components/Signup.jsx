@@ -27,41 +27,49 @@ const Signup = () => {
   //   }
 
   return (
-    <div>
+    <div className='signUpContainer'>
       <form action='/signup' method='POST'>
-        <input
-          name='un'
-          className='username'
-          type='text'
-          placeholder='Username'
-          value={username}
-          onChange={handleUsernameChange}
-        />
-        <input
-          name='pw'
-          className='password'
-          type='password'
-          placeholder='Password'
-          value={password}
-          onChange={handlePasswordChange}
-        />
-        <input
-          name='fn'
-          className='first-name'
-          type='text'
-          placeholder='First Name'
-          value={firstName}
-          onChange={handlefnChange}
-        />
-        <input
-          name='ln'
-          className='last-name'
-          type='text'
-          placeholder='Last Name'
-          value={lastName}
-          onChange={handlelnChange}
-        />
-        <button type='submit'>Submit</button>
+        <span className='signUpForm'>
+          <input
+            name='un'
+            className='username'
+            type='text'
+            placeholder='Username'
+            value={username}
+            onChange={handleUsernameChange}
+          />
+        </span>
+        <span className='signUpForm'>
+          <input
+            name='pw'
+            className='password'
+            type='password'
+            placeholder='Password'
+            value={password}
+            onChange={handlePasswordChange}
+          />
+        </span>
+        <span className='signUpForm'>
+          <input
+            name='fn'
+            className='first-name'
+            type='text'
+            placeholder='First Name'
+            value={firstName}
+            onChange={handlefnChange}
+          />
+        </span>
+        <span className='signUpForm'>
+          <input
+            name='ln'
+            className='last-name'
+            type='text'
+            placeholder='Last Name'
+            value={lastName}
+            onChange={handlelnChange}
+          />
+        </span>
+        <button className='signUpSubmitButton' type='submit'>Submit</button>
       </form>
     </div>
   );
