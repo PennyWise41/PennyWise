@@ -107,6 +107,38 @@ dataController.updateBudget = async (req, res, next) => {
   }
 }
 
+dataController.loadData = async (req, res, next) => {
+  const id = res.locals.id;
+  let d = new Date();
+  const months = ["January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"];
+  let month = months[d.getMonth()];
+  let year = d.getFullYear();
+  
+  try {
+    // query all expenses for the month/year for this client
+    const sqlQueryExpenses = 'SELECT * FROM Expenses WHERE clientid = $1 and year = $2 and month = $3';
+    const expenses = await db.query(sqlQueryExpenses, [id, year, month]);
+    res.locals.expenses = expenses.rows;
+
+    // query curr client's budget with the given month/year
+    const sqlQuery = 'SELECT * FROM Budget WHERE clientid = $1 and year = $2 and month = $3';
+    const data = await db.query(sqlQuery, [id, year, month]);
+    res.locals.remaining = data.rows[0].remaining;
+    res.locals.budget = data.rows[0].budget;
+    return next();
+  } catch (err) {
+    return next({
+      log: 'Error occurred in dataController.updateBudget',
+      status: 500,
+      message: { err: 'An error occurred in dataController.updateBudget'}
+    });
+  }
+}
+
+
+
+
 
 
 
