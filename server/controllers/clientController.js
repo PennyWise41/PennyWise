@@ -5,8 +5,8 @@ const SALT_WORK_FACTOR = 10;
 const clientController = {};
 
 clientController.createClient = async (req, res, next) => {
-    const { username, password, firstName, lastName } = req.body;
-    if (!username || !password || !firstName || !lastName ) {
+    const { username, password, firstname, lastname } = req.body;
+    if (!username || !password || !firstname || !lastname ) {
       res.locals.loggedIn = false;
       return next();
     }
@@ -18,7 +18,7 @@ clientController.createClient = async (req, res, next) => {
 			console.log('got id:', newID);
 			console.log(req.body);
       const sqlQuery = 'INSERT INTO Client (id, username, password, fname, lname) VALUES ($1, $2, $3, $4, $5)';
-      await db.query(sqlQuery, [newID, username, hashPassword, firstName, lastName]);
+      await db.query(sqlQuery, [newID, username, hashPassword, firstname, lastname]);
 			
 			const data = await db.query(`SELECT * FROM Client WHERE id = ${newID}`);
 			console.log(data);

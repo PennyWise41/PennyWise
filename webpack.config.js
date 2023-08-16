@@ -49,8 +49,14 @@ module.exports = {
     open: true,
     hot: true,
     compress: true,
+    // proxy: {
+    //   '/': 'http://localhost:3000',
+    // },
     proxy: {
-      '/': 'http://localhost:3000',
+      "/server": {
+        target: "http://localhost:3000/",
+        secure: false,
+      },
     },
   },
 };
