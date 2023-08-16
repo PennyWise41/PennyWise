@@ -1,5 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+let d = new Date();
+const months = ["January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"];
+let date = (d.getDate());
+let month = months[d.getMonth()];
+let year = d.getFullYear();
+
+
 const initialState = {
   loggedIn: false,
   id: null,
@@ -9,8 +17,8 @@ const initialState = {
   budget: null,
   remaining: null,
   expenses: [],
-
-  // colorTheme: null,
+  month: month,
+  year: year,
 }
 
 export const reducer = createSlice({
@@ -49,6 +57,12 @@ export const reducer = createSlice({
     setExpenses: (state, action) => {
       state.expenses = action.payload;
     },
+    setMonth: (state, action) => {
+      state.month = action.payload;
+    },
+    setYear: (state, action) => {
+      state.year = action.payload;
+    },
   }
 })
 
@@ -62,6 +76,8 @@ export const {
   setBudget,
   setRemaining,
   setExpenses,
+  setMonth,
+  setYear,
 } = reducer.actions;
 
 export default reducer.reducer;
