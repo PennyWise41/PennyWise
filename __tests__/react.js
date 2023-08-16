@@ -6,6 +6,17 @@ import regeneratorRuntime from 'regenerator-runtime';
 
 import App from '../client/App.jsx';
 
+describe('App component tests', () => {
+    it('App renders', () => {
+        const app = render(<App />);
+        expect(app).not.toBe(null);
+    })
+})
+
+describe('login functionality', () => {
+    let login
+})
+
 describe('Unit testing React components', () => {
     let num = 7;
     it('this num should equal 7', () => {
