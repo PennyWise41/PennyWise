@@ -15,8 +15,8 @@ app.use(cookieParser());
 app.use('/assets', express.static(path.resolve(__dirname, '../client/assets')));
 
 // set up routers
-app.use('/client', clientRouter);
-app.use('/data', dataRouter);
+app.use('/server/client', clientRouter);
+app.use('/server/data', dataRouter);
 
 /**
  * 404 handler

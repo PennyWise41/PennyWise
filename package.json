@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@reduxjs/toolkit": "^1.9.5",
     "@redux-devtools/extension": "^3.2.5",
     "axios": "^1.4.0",
     "bcryptjs": "^2.4.3",
