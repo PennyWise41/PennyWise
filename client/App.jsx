@@ -18,7 +18,7 @@ import HeaderContainer from './containers/header.jsx';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './pages/homePage.jsx';
 import SignUp from './pages/signupPage.jsx';
-import LogIn from './pages/loginPage.jsx';
+import LogIn from './pages/LoginPage.jsx';
 import User from './pages/userPage.jsx';
 // import './stylesheets/styles.scss';
 // import { loggingIn, setUser } from './reducers/reducer.js';
