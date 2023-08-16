@@ -69,12 +69,12 @@ const Signup = () => {
 
 export default Signup;
 
-{
-  /* <form id="signin" action="/http://localhost:3333/signin" method="POST">
-<input id="user" name="user" placeholder="user" type="text"></input>
-<br>
-<input id="pass" name="pass" placeholder="pass" type="text"></input>
-<br>
-<button id="submit" type="submit">Sign In</button>
-</form> */
-}
+// {
+//   /* <form id="signin" action="/http://localhost:3333/signin" method="POST">
+// <input id="user" name="user" placeholder="user" type="text"></input>
+// <br>
+// <input id="pass" name="pass" placeholder="pass" type="text"></input>
+// <br>
+// <button id="submit" type="submit">Sign In</button>
+// </form> */
+// }

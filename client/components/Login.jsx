@@ -48,7 +48,7 @@ const Login = () => {
         </form>
       </div>
       <div>
-        <button className='signUp'>Sign Up</button>
+        <button className='signUp'>Create an Account</button>
       </div>
     </div>
   );
