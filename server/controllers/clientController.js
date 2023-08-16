@@ -4,31 +4,6 @@ const SALT_WORK_FACTOR = 10;
 
 const clientController = {};
 
-// clientController.getClients = async(req, res, next) => {
-//     const queryString = 'SELECT * FROM Client';
-
-//     try {
-//         const reply = await db.query(queryString);
-//         console.log(reply.rows);
-        
-//     } catch(err) {
-//         console.log(err)
-//     }
-// }
-
-clientController.test = async (req, res, next) => {
-	try{
-		const id = await db.query('SELECT COUNT(*) + 1 as nextID FROM Client');
-		console.log(id.rows);
-		res.locals.id = id.rows[0].nextid;
-		console.log(res.locals.id);
-		return next();
-	} catch(err) {
-		return next(err);
-	}
-
-}
-
 clientController.createClient = async (req, res, next) => {
     const { username, password, firstName, lastName } = req.body;
     if (!username || !password || !firstName || !lastName ) {
@@ -43,10 +18,8 @@ clientController.createClient = async (req, res, next) => {
 			console.log('got id:', newID);
 			console.log(req.body);
       const sqlQuery = 'INSERT INTO Client (id, username, password, fname, lname) VALUES ($1, $2, $3, $4, $5)';
-      // const sqlQuery = 'INSERT INTO Client (id, username, password, fname, lname) VALUES ($1, $2, $3, $4, $5) RETURNING _id';
-    
-      // const data = await db.query(sqlQuery, [newID, username, hashPassword, firstName, lastName]);
       await db.query(sqlQuery, [newID, username, hashPassword, firstName, lastName]);
+			
 			const data = await db.query(`SELECT * FROM Client WHERE id = ${newID}`);
 			console.log(data);
       res.locals.id = data.rows[0].id;
@@ -63,9 +36,6 @@ clientController.createClient = async (req, res, next) => {
       });
     }
 };
-
-
-
   
 /**
 * verifyUser - Obtain username and password from the request body, locate
@@ -73,24 +43,23 @@ clientController.createClient = async (req, res, next) => {
 * against the password stored in the database.
 */
 clientController.verifyClient = async (req, res, next) => {
+	// check if username and password is defined
 	const { username, password } = req.body;
 	if (!username || !password) {
 		res.locals.loggedIn = false;
 		return next();
 	}
-	console.log(req.body);
-
-	const sqlQuery = 'SELECT * FROM Client WHERE username = $1';
 
 	try {
+		// query data for curr client
+		const sqlQuery = 'SELECT * FROM Client WHERE username = $1';
 		const data = await db.query(sqlQuery, [username]);
-		// const data = await db.query(`SELECT * FROM Client WHERE username = ${username}`);
-		console.log(req.body);
-		console.log(data);
+		// console.log(data);
 		if (!data) {
 			res.locals.loggedIn = false;
 			return next();
 		} else {
+			// check bcrypted password
 			bcrypt.compare(password, data.rows[0].password)
 				.then((result) => {
 					if (!result) {
@@ -112,6 +81,7 @@ clientController.verifyClient = async (req, res, next) => {
 		}
 
 	} catch (err) {
+		// err shows can't find client in db, set loggedIn to false 
 		res.locals.loggedIn = false;
 		return next();
 		// return next({
