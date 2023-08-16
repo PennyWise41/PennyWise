@@ -1,76 +1,114 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router';
+import {
+  loggingIn,
+  setID,
+  setUserName,
+  setFname,
+  setLname,
+  setBudget,
+  setRemaining,
+  setExpenses,
+} from '../redux/ClientReducer.js';
 
 const Signup = () => {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const dispatch = useDispatch();
 
-  const handlefnChange = (event) => {
-    setFirstName(event.target.value);
+  const navigate = useNavigate();
+  // const [firstName, setFirstName] = useState('');
+  // const [lastName, setLastName] = useState('');
+  // const [username, setUsername] = useState('');
+  // const [password, setPassword] = useState('');
+
+  // http://localhost:3000/server
+  // 'localhost:3000/server/client/signup'
+
+  const signUpFetch = (username, password, firstname, lastname) => {
+    
+
+    fetch('http://localhost:3000/server/client/signup', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ username, password, firstname, lastname }),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        dispatch(loggingIn(res.loggedIn));
+        if (res.loggedIn) {
+          dispatch(setID(res.id));
+          dispatch(setUserName(res.username));
+          dispatch(setFname(res.firstname));
+          dispatch(setLname(res.lastname));
+          dispatch(setBudget(null));
+          dispatch(setRemaining(null));
+          dispatch(setExpenses([]));
+          navigate('/dashboard');
+        }
+      });
   };
 
-  const handlelnChange = (event) => {
-    setLastName(event.target.value);
-  };
+  // const handlefnChange = (event) => {
+  //   setFirstName(event.target.value);
+  // };
 
-  const handleUsernameChange = (event) => {
-    setUsername(event.target.value);
-  };
+  // const handlelnChange = (event) => {
+  //   setLastName(event.target.value);
+  // };
 
-  const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
-  };
+  // const handleUsernameChange = (event) => {
+  //   setUsername(event.target.value);
+  // };
+
+  // const handlePasswordChange = (event) => {
+  //   setPassword(event.target.value);
+  // };
 
   //   function onSubmit({ username, password, firstName, lastName }) {
   //     console.log('submitted data:', { username, password, firstName, lastName });
   //   }
 
   return (
-    <div className='signUpContainer'>
-      <form action='/signup' method='POST'>
-        <span className='signUpForm'>
-          <input
-            name='un'
-            className='username'
-            type='text'
-            placeholder='Username'
-            value={username}
-            onChange={handleUsernameChange}
-          />
-        </span>
-        <span className='signUpForm'>
-          <input
-            name='pw'
-            className='password'
-            type='password'
-            placeholder='Password'
-            value={password}
-            onChange={handlePasswordChange}
-          />
-        </span>
-        <span className='signUpForm'>
-          <input
-            name='fn'
-            className='first-name'
-            type='text'
-            placeholder='First Name'
-            value={firstName}
-            onChange={handlefnChange}
-          />
-        </span>
-        <span className='signUpForm'>
-          <input
-            name='ln'
-            className='last-name'
-            type='text'
-            placeholder='Last Name'
-            value={lastName}
-            onChange={handlelnChange}
-          />
-        </span>
-        <button className='signUpSubmitButton' type='submit'>Submit</button>
-      </form>
+    <div className='background-pic-signup'>
+      <div className='signUpContainer'>
+        <form>
+          <div>
+            <label className='signup-label'>First Name</label>
+            <input type='text' placeholder='First Name ' id='firstname' />
+          </div>
+          <div>
+            <label className='signup-label'>Last Name</label>
+            <input type='text' placeholder='Last Name ' id='lastname' />
+          </div>
+          <div>
+            <label className='signup-label'>Username</label>
+            <input type='text' placeholder='Username ' id='username' />
+          </div>
+
+          <div>
+            <label className='signup-label'>Password</label>
+            <input type='password' placeholder='Password ' id='password' />
+          </div>
+          <button
+            className='signUpSubmitButton'
+            type='submit'
+            value='Sign Up'
+            onClick={(event) => {
+              event.preventDefault();
+              signUpFetch(
+                document.querySelector('#username').value,
+                document.querySelector('#password').value,
+                document.querySelector('#firstname').value,
+                document.querySelector('#lastname').value
+              );
+            }}
+          >
+            Submit
+          </button>
+        </form>
+      </div>
     </div>
   );
 };

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
-const Chart = () => {
+const TotalSpent = () => {
   return <h1>testing testing testing</h1>;
 };
 
-export default Chart;
+export default TotalSpent;

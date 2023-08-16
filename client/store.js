@@ -1,6 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import ClientReducer from './redux/ClientReducer.js';
-import AuthReducer from './redux/AuthReducer.js';
+import reducer from './redux/ClientReducer.js';
 
 // import { composeWithDevTools } from 'redux-devtools-extension';
 
@@ -11,7 +10,7 @@ import AuthReducer from './redux/AuthReducer.js';
 // });
 
 const store = configureStore({
-  reducer: { client: ClientReducer, auth: AuthReducer },
+  reducer: { reducer: reducer },
 });
 
 export default store;
