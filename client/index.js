@@ -7,14 +7,12 @@ import { BrowserRouter } from 'react-router-dom';
 import { render } from 'react-dom';
 import ReactDOM from 'react-dom/client';
 
-// const root = createRoot(document.getElementById('root'));
-// root.render(
-//   <Provider store={store}>
-//     <App />
-//   </Provider>
-// );
-
-render(<Provider store={store}><App /></Provider>, document.getElementById('app'));
+render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById('app')
+);
 
 // const root = document.getElementById('app');
 // ReactDOM.createRoot(root).render(
