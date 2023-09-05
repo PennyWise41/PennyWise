@@ -1,17 +1,3 @@
-// import React from 'react';
-// import Budget from './components/Budget.jsx'
-
-// const App = () => {
-//     return (
-//         <div>
-//           <h1>TESTING CATs</h1>
-//           <Budget />
-//         </div>
-//     )
-// };
-
-// export default App;
-
 import React, { useEffect } from 'react';
 import HeaderContainer from './containers/header.jsx';
 // import FooterContainer from './containers/footer.jsx';
@@ -20,8 +6,7 @@ import Home from './pages/homePage.jsx';
 import SignUp from './pages/signupPage.jsx';
 import LogIn from './pages/loginPage.jsx';
 import User from './pages/userPage.jsx';
-// import './stylesheets/styles.scss';
-// import { loggingIn, setUser } from './reducers/reducer.js';
+
 import { useDispatch } from 'react-redux';
 
 const App = () => {
@@ -39,7 +24,7 @@ const App = () => {
   //   checkLoggedIN();
   // });
 
-  return(
+  return (
     <div>
       <Router>
         <HeaderContainer />
@@ -50,9 +35,8 @@ const App = () => {
           <Route path='/user' element={<User />} />
         </Routes>
       </Router>
-     
     </div>
-  )
-}
+  );
+};
 
 export default App;

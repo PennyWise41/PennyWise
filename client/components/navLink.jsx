@@ -20,8 +20,9 @@ export default function navLink({ nav, link }) {
         to={link}
         href={link}
         onClick={() => {
-          dispatch(tryingToLogIn(null));          
-        }}>
+          dispatch(tryingToLogIn(null));
+        }}
+      >
         {nav}
       </Link>
     );
